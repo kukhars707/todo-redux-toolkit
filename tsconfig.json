@@ -7,5 +7,8 @@
       "noImplicitAny": true,
       "allowSyntheticDefaultImports": true,
       "moduleResolution": "node",
+      "paths": {
+        "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
+      }
     }
 }
