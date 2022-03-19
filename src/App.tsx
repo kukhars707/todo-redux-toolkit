@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useRef} from 'react';
 import {useAppSelector, useAppDispatch} from './hooks';
 import {create, remove, complate} from './store/todosReducer';
 import Button from '@mui/material/Button';
@@ -14,11 +14,18 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 const App: React.FC = (): React.ReactElement => {
-    const [todo, setTodo] = useState(null);
+    const [todo, setTodo] = useState('');
+    const [validadion, setValidadion] = useState(false);
     const task = useAppSelector((state) => state.todos);
     const dispatch = useAppDispatch();
     const handleAddTodo = useCallback(() => {
-        dispatch(create(todo));
+        if (!todo) {
+            setValidadion(true);
+        } else {
+            dispatch(create(todo));
+            setValidadion(false);
+            setTodo('');
+        }
     }, [todo, dispatch]);
     return (
         <Box sx={{backgroundColor: '#f3f3f3', height: '100vh'}}>
@@ -28,8 +35,14 @@ const App: React.FC = (): React.ReactElement => {
                 </Typography>
             </AppBar>
             <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                <Box sx={{display: 'flex', marginBottom: '20px'}}>
-                    <TextField label="Todo" placeholder="Enter your task" onChange={(e) => setTodo(e.target.value)} />
+                <Box sx={{display: 'flex', marginBottom: '20px', width: 360, justifyContent: 'space-between'}}>
+                    <TextField
+                        value={todo}
+                        error={validadion}
+                        label="Todo"
+                        placeholder="Enter your task"
+                        onChange={(e) => setTodo(e.target.value)}
+                    />
                     <Button variant="contained" onClick={handleAddTodo}>
                         add
                     </Button>
