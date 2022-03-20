@@ -12,6 +12,8 @@ import ListItemText from '@mui/material/ListItemText';
 import AppBar from '@mui/material/AppBar';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import Toolbar from '@mui/material/Toolbar';
 
 const App: React.FC = (): React.ReactElement => {
     const [todo, setTodo] = useState('');
@@ -27,12 +29,20 @@ const App: React.FC = (): React.ReactElement => {
             setTodo('');
         }
     }, [todo, dispatch]);
+    const handleToSRC = useCallback(() => {
+        window.open('https://github.com/kukhars707/todo-redux-toolkit', '_blank');
+    }, []);
     return (
         <Box sx={{backgroundColor: '#f3f3f3', height: '100vh'}}>
-            <AppBar position="static" sx={{marginBottom: '20px'}}>
-                <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                    Todo List
-                </Typography>
+            <AppBar position="static" sx={{marginBottom: '20px', display: 'flex'}}>
+                <Toolbar>
+                    <Typography variant="h6" component="div">
+                        Todo List
+                    </Typography>
+                    <IconButton onClick={handleToSRC}>
+                        <GitHubIcon />
+                    </IconButton>
+                </Toolbar>
             </AppBar>
             <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                 <Box sx={{display: 'flex', marginBottom: '20px', width: 360, justifyContent: 'space-between'}}>
